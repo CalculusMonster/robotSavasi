@@ -91,4 +91,8 @@ int main() {
 
     return 0;
 }
-// TODO: add code here!
+// TO DO LIST
+// Class'lar header dosyasına alınacak.
+// Move fonk. lar için köşelere geldiğinde diğer taraftan çıkma eklenecek.
+// Yenilme ve puanlama sistemi eklenecek.
+// Ek özellikler eklenecek.
