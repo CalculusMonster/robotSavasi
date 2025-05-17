@@ -81,19 +81,19 @@ public:
             default: cout << "Hatali giris!\n"; return;
         }
 
-        int nx = x + dx, ny = y + dy;
-        if (nx >= 0 && nx < SIZE && ny >= 0 && ny < SIZE) {
-            for (auto& r : robotlar) {
-                if (r != this && r->hayattaMi() && r->x == nx && r->y == ny) {
-                    r->oldur();
-                    this->olduren();
-                    break;
-                }
+        int nx = (x + dx + SIZE) % SIZE;
+        int ny = (y + dy + SIZE) % SIZE;
+
+        for (auto& r : robotlar) {
+            if (r != this && r->hayattaMi() && r->x == nx && r->y == ny) {
+                r->oldur();
+                this->olduren();
+                break;
             }
-            arena[x][y] = ". ";
-            x = nx; y = ny;
-            arena[x][y] = isim;
         }
+        arena[x][y] = ". ";
+        x = nx; y = ny;
+        arena[x][y] = isim;
     }
 };
 
@@ -106,20 +106,19 @@ public:
 
         int dirs[4][2] = { {-1,-1}, {-1,1}, {1,-1}, {1,1} };
         int i = randnum(0, 3);
-        int nx = x + dirs[i][0], ny = y + dirs[i][1];
+        int nx = (x + dirs[i][0] + SIZE) % SIZE;
+        int ny = (y + dirs[i][1] + SIZE) % SIZE;
 
-        if (nx >= 0 && nx < SIZE && ny >= 0 && ny < SIZE) {
-            for (auto& r : robotlar) {
-                if (r != this && r->hayattaMi() && r->x == nx && r->y == ny) {
-                    r->oldur();
-                    this->olduren();
-                    break;
-                }
+        for (auto& r : robotlar) {
+            if (r != this && r->hayattaMi() && r->x == nx && r->y == ny) {
+                r->oldur();
+                this->olduren();
+                break;
             }
-            arena[x][y] = ". ";
-            x = nx; y = ny;
-            arena[x][y] = isim;
         }
+        arena[x][y] = ". ";
+        x = nx; y = ny;
+        arena[x][y] = isim;
     }
 };
 
@@ -134,9 +133,9 @@ public:
         for (int dx = -1; dx <= 1; dx++) {
             for (int dy = -1; dy <= 1; dy++) {
                 if (dx == 0 && dy == 0) continue;
-                int nx = x + dx, ny = y + dy;
-                if (nx >= 0 && nx < SIZE && ny >= 0 && ny < SIZE)
-                    komsular.push_back({nx, ny});
+                int nx = (x + dx + SIZE) % SIZE;
+                int ny = (y + dy + SIZE) % SIZE;
+                komsular.push_back({nx, ny});
             }
         }
 
@@ -229,10 +228,10 @@ int main() {
             r->move(robotlar);
         }
         skorTablosu(robotlar);
-        cout << "\nEnter'a basın...";
+        cout << "\nEnter'a basin...";
         cin.ignore();
         cin.get();
-        system("cls"); 
+        system("cls");
     }
 
     arenayaz();
